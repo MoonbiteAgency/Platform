@@ -1,9 +1,14 @@
 /vendor
 /node_modules
 /public/storage
+/public/modules
 Homestead.yaml
 Homestead.json
 .env
 composer.lock
 package-lock.json
 .php_cs.cache
+/Themes/Adminlte/assets
+/Themes/Adminlte/fonts
+/Modules/MoonModules
+/nbproject
