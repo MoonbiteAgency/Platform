@@ -12,3 +12,6 @@ package-lock.json
 /Themes/Adminlte/fonts
 /Modules/MoonModules
 /nbproject
+/Themes/Adminlte/assets/vendor
+/Themes/Adminlte/assets/img
+/Themes/Adminlte/fonts
