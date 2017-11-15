@@ -17,3 +17,6 @@ package-lock.json
 /Themes/Adminlte/assets/img
 /Themes/Adminlte/fonts
 /bootstrap/cache/moon_modules
+.buildpath
+.project
+.settings/
