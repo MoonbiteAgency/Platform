@@ -29,15 +29,9 @@ class CachePageDecorator extends BaseCacheDecorator implements PageRepository
      */
     public function findHomepage()
     {
-        return $this->cache
-            ->tags([$this->entityName, 'global'])
-            ->remember(
-                "{$this->locale}.{$this->entityName}.findHomepage",
-                $this->cacheTime,
-                function () {
-                    return $this->repository->findHomepage();
-                }
-            );
+        return $this->remember(function () {
+            return $this->repository->findHomepage();
+        });
     }
 
     /**
@@ -46,15 +40,9 @@ class CachePageDecorator extends BaseCacheDecorator implements PageRepository
      */
     public function countAll()
     {
-        return $this->cache
-            ->tags([$this->entityName, 'global'])
-            ->remember(
-                "{$this->locale}.{$this->entityName}.countAll",
-                $this->cacheTime,
-                function () {
-                    return $this->repository->countAll();
-                }
-            );
+        return $this->remember(function () {
+            return $this->repository->countAll();
+        });
     }
 
     /**
@@ -64,15 +52,9 @@ class CachePageDecorator extends BaseCacheDecorator implements PageRepository
      */
     public function findBySlugInLocale($slug, $locale)
     {
-        return $this->cache
-            ->tags([$this->entityName, 'global'])
-            ->remember(
-                "{$this->locale}.{$this->entityName}.findBySlugInLocale.{$slug}.{$locale}",
-                $this->cacheTime,
-                function () use ($slug, $locale) {
-                    return $this->repository->findBySlugInLocale($slug, $locale);
-                }
-            );
+        return $this->remember(function () use ($slug, $locale) {
+            return $this->repository->findBySlugInLocale($slug, $locale);
+        });
     }
 
     /**
@@ -82,22 +64,17 @@ class CachePageDecorator extends BaseCacheDecorator implements PageRepository
      */
     public function serverPaginationFilteringFor(Request $request): LengthAwarePaginator
     {
+        $page = $request->get('page');
         $order = $request->get('order');
         $orderBy = $request->get('order_by');
         $perPage = $request->get('per_page');
         $search = $request->get('search');
 
-        $key = "{$order}-{$orderBy}-{$perPage}-{$search}";
+        $key = $this->getBaseKey() . "serverPaginationFilteringFor.{$page}-{$order}-{$orderBy}-{$perPage}-{$search}";
 
-        return $this->cache
-            ->tags([$this->entityName, 'global'])
-            ->remember(
-                "{$this->locale}.{$this->entityName}.serverPaginationFilteringFor.{$key}",
-                $this->cacheTime,
-                function () use ($request) {
-                    return $this->repository->serverPaginationFilteringFor($request);
-                }
-            );
+        return $this->remember(function () use ($request) {
+            return $this->repository->serverPaginationFilteringFor($request);
+        }, $key);
     }
 
     /**
