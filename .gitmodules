@@ -1,0 +1,3 @@
+[submodule "Modules/Product"]
+	path = Modules/Product
+	url = git@bitbucket.org:moonbite/product.git
